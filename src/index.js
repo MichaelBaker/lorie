@@ -27,15 +27,15 @@ store.dispatch(Store.addHypothesis({ id: "1", description: "This is hypothesis 1
 store.dispatch(Store.addHypothesis({ id: "2", description: "This is hypothesis 2", weight: 50 }))
 store.dispatch(Store.addHypothesis({ id: "3", description: "This is hypothesis 3", weight: 786 }))
 
-let render = (state) => {
+let render = (store, state) => {
   ReactDOM.render(
-    <App state={state}/>,
+    <App store={store} state={state}/>,
     document.getElementById('root')
   )
 }
 
-render(store.getState())
+render(store, store.getState())
 
 store.subscribe(() => {
-  render(store.getState())
+  render(store, store.getState())
 })

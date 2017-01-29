@@ -1,33 +1,34 @@
 import React, { Component } from 'react'
-import _ from 'underscore'
+import CommandWindow        from './CommandWindow.js'
+import _                    from 'underscore'
 
-let topStyle = {
+const topStyle = {
   display:       "flex",
   flexDirection: "column",
 }
 
-let commandStyle ={
+const commandStyle ={
   minHeight: "200px",
 }
 
-let lowerStyle = {
+const lowerStyle = {
   display:       "flex",
   flexDirection: "row",
 }
 
-let listStyle = {
+const listStyle = {
   flex: "1 1",
 }
 
-let renderObservation = (observation) => {
+const renderObservation = (observation) => {
   return <div key={observation.id}>{observation.description}</div>
 }
 
-let renderReason = (reason, index) => {
+const renderReason = (reason, index) => {
   return <div key={index}>{reason}</div>
 }
 
-let renderConsideration = (consideration) => {
+const renderConsideration = (consideration) => {
   return (
     <div key={consideration.id}>
       <div>{consideration.description}</div>
@@ -38,9 +39,9 @@ let renderConsideration = (consideration) => {
   )
 }
 
-let renderHypothesis = (totalWeight, hypothesis) => {
-  let percent = parseInt((hypothesis.weight / totalWeight) * 100, 10).toString() + "%"
-  let style   = { background: "red", height: 20, width: percent }
+const renderHypothesis = (totalWeight, hypothesis) => {
+  const percent = parseInt((hypothesis.weight / totalWeight) * 100, 10).toString() + "%"
+  const style   = { background: "red", height: 20, width: percent }
 
   return (
     <div key={hypothesis.id}>
@@ -52,14 +53,15 @@ let renderHypothesis = (totalWeight, hypothesis) => {
 
 class App extends Component {
   render() {
-    let state            = this.props.state
-    let totalWeight      = _.reduce(state.hypotheses, (a, b) => a + b.weight, 0)
-    let sortedHypotheses = _.sortBy(state.hypotheses, "weight").reverse()
+    const state            = this.props.state
+    const totalWeight      = _.reduce(state.hypotheses, (a, b) => a + b.weight, 0)
+    const sortedHypotheses = _.sortBy(state.hypotheses, "weight").reverse()
 
     return (
       <div className="App">
         <div style={topStyle}>
           <div style={commandStyle}>
+            <CommandWindow store={this.props.store} command={this.props.state.command} />
           </div>
           <div style={lowerStyle}>
             <div style={listStyle}>
