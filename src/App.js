@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CommandWindow        from './CommandWindow.js'
 import ObservationItem      from './ObservationItem.js'
+import ConsiderationsList   from './ConsiderationsList.js'
 import _                    from 'underscore'
 import { DragDropContext }  from 'react-dnd'
 import HTML5Backend         from 'react-dnd-html5-backend'
@@ -25,21 +26,6 @@ const listStyle = {
 
 const renderObservation = (observation) => {
   return <ObservationItem key={observation.id} observation={observation} />
-}
-
-const renderReason = (reason, index) => {
-  return <div key={index}>{reason}</div>
-}
-
-const renderConsideration = (consideration) => {
-  return (
-    <div key={consideration.id}>
-      <div>{consideration.description}</div>
-      <div>
-        {_.map(consideration.reasons, renderReason)}
-      </div>
-    </div>
-  )
 }
 
 const renderHypothesis = (totalWeight, hypothesis) => {
@@ -72,8 +58,7 @@ class App extends Component {
               <div>{_.map(_.values(state.observations), renderObservation)}</div>
             </div>
             <div style={listStyle}>
-              <h2>Considerations</h2>
-              <div>{_.map(state.considerations, renderConsideration)}</div>
+              <ConsiderationsList considerations={state.considerations} />
             </div>
             <div style={listStyle}>
               <h2>Hypotheses</h2>

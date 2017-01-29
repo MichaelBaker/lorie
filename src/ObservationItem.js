@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { DragSource }       from 'react-dnd'
-import * as Store           from './Store.js'
 
 const dragSource = {
   beginDrag(props) {
-    return {}
+    return { observationId: props.observation.id }
   }
 }
 
@@ -17,18 +16,20 @@ const getDragProps = (connect, monitor) => {
 
 class ObservationItem extends Component {
   render() {
-    const id = this.props.observation.id
-
     const {
       connectDragSource,
       isDragging,
     } = this.props
 
-    if (isDragging) {
-      return connectDragSource(<div>Yep</div>)
-    } else {
-      return connectDragSource(<div>Nope</div>)
-    }
+    const style = (() => {
+      if(isDragging) {
+        return { color: 'gray' }
+      } else {
+        return {}
+      }
+    })()
+
+    return connectDragSource(<div style={style}>{this.props.observation.description}</div>)
   }
 }
 
