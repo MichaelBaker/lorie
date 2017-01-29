@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import CommandWindow        from './CommandWindow.js'
+import ObservationItem      from './ObservationItem.js'
 import _                    from 'underscore'
+import { DragDropContext }  from 'react-dnd'
+import HTML5Backend         from 'react-dnd-html5-backend'
 
 const topStyle = {
   display:       "flex",
@@ -21,7 +24,7 @@ const listStyle = {
 }
 
 const renderObservation = (observation) => {
-  return <div key={observation.id}>{observation.description}</div>
+  return <ObservationItem key={observation.id} observation={observation} />
 }
 
 const renderReason = (reason, index) => {
@@ -83,4 +86,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default DragDropContext(HTML5Backend)(App);
