@@ -6,6 +6,7 @@ import * as Store           from './Store.js'
 const dragTarget = {
   drop(props, monitor) {
     const observation = monitor.getItem()
+
     if(observation && observation.description) {
       props.store.dispatch(Store.createEvidence([observation.description]))
     }

@@ -2,7 +2,9 @@ import * as Redux from 'redux'
 import createUUID from 'uuid/v4'
 
 const reducer = (state, action) => {
-  if(action.type === "AddObservation") {
+  if(action.type === "@@redux/INIT") {
+    // Ignore
+  } else if(action.type === "AddObservation") {
     state.observations[action.observation.id] = action.observation
   } else if(action.type === "CreateObservation") {
     const id                  = createUUID()
@@ -24,6 +26,13 @@ const reducer = (state, action) => {
     state.evidence[id] = evidence
   } else if(action.type === "AddEvidence") {
     state.evidence[action.evidence.id] = action.evidence
+  } else if(action.type === "AddReason") {
+    const evidenceId = action.evidenceId
+    const reason     = action.reason
+    const evidence   = state.evidence[evidenceId]
+    evidence.reasons.push(reason)
+  } else {
+    console.log("Action not impelmented.", action)
   }
 
   return state
@@ -74,6 +83,14 @@ export const addEvidence = (evidence) => {
   return {
     type:     "AddEvidence",
     evidence: evidence,
+  }
+}
+
+export const addReason = (evidenceId, reason) => {
+  return {
+    type: "AddReason",
+    evidenceId,
+    reason,
   }
 }
 

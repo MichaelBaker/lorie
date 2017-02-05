@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import _                    from 'underscore'
 import { DropTarget }       from 'react-dnd'
+import * as Store           from './Store.js'
 
 const reasonStyle = {
   paddingLeft: "20px"
@@ -8,7 +9,13 @@ const reasonStyle = {
 
 const dragTarget = {
   drop(props, monitor) {
-    console.log(monitor.getItem())
+    const evidence    = props.evidence
+    const evidenceId  = evidence.id
+    const observation = monitor.getItem()
+
+    if(evidenceId && observation && observation.description) {
+      props.store.dispatch(Store.addReason(evidenceId, observation.description))
+    }
   }
 }
 
