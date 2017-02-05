@@ -21,7 +21,7 @@ class App extends Component {
         <div style={lowerStyle}>
           <Hypotheses   store={store} hypotheses={state.hypotheses} />
           <Observations store={store} observations={state.observations} />
-          <Evidence evidence={state.evidence} />
+          <Evidence     store={store} evidence={state.evidence} />
         </div>
       </div>
     );

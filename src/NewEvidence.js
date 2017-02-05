@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import _                    from 'underscore'
 import { DropTarget }       from 'react-dnd'
+import * as Store           from './Store.js'
 
 const dragTarget = {
   drop(props, monitor) {
-    console.log(monitor.getItem())
+    const observation = monitor.getItem()
+    if(observation && observation.description) {
+      props.store.dispatch(Store.createEvidence([observation.description]))
+    }
   }
 }
 

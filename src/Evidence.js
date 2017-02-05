@@ -12,7 +12,7 @@ class Evidence extends Component {
     return (
       <div style={{ flex: "1 1" }}>
         <h2>Evidence</h2>
-        <NewEvidence />
+        <NewEvidence store={this.props.store} />
         {_.map(this.props.evidence, renderEvidenceItem)}
       </div>
     )

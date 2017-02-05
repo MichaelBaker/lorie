@@ -16,6 +16,12 @@ const reducer = (state, action) => {
     const description         = action.description
     const hypothesis          = { id, description, weight: 1000 }
     state.hypotheses[id]      = hypothesis
+  } else if(action.type === "CreateEvidence") {
+    const id           = createUUID()
+    const reasons      = action.reasons
+    const description  = "New Evidence"
+    const evidence     = { id, reasons, description }
+    state.evidence[id] = evidence
   } else if(action.type === "AddEvidence") {
     state.evidence[action.evidence.id] = action.evidence
   }
@@ -27,13 +33,6 @@ const initialState = {
   observations:   {},
   evidence:       {},
   hypotheses:     {},
-}
-
-export const addObservation = (observation) => {
-  return {
-    type:        "AddObservation",
-    observation: observation,
-  }
 }
 
 export const createObservation = (description) => {
@@ -50,10 +49,24 @@ export const createHypothesis = (description) => {
   }
 }
 
+export const createEvidence = (reasons) => {
+  return {
+    type: "CreateEvidence",
+    reasons,
+  }
+}
+
 export const addHypothesis = (hypothesis) => {
   return {
     type:       "AddHypothesis",
     hypothesis: hypothesis,
+  }
+}
+
+export const addObservation = (observation) => {
+  return {
+    type:        "AddObservation",
+    observation: observation,
   }
 }
 

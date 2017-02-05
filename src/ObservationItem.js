@@ -3,7 +3,7 @@ import { DragSource }       from 'react-dnd'
 
 const dragSource = {
   beginDrag(props) {
-    return { observationId: props.observation.id }
+    return props.observation
   }
 }
 
