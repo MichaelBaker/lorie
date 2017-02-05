@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Hypotheses           from './Hypotheses.js'
 import ObservationItem      from './ObservationItem.js'
-import ConsiderationsList   from './ConsiderationsList.js'
+import Evidence             from './Evidence.js'
 import _                    from 'underscore'
 import { DragDropContext }  from 'react-dnd'
 import HTML5Backend         from 'react-dnd-html5-backend'
@@ -39,7 +39,7 @@ class App extends Component {
               <div>{_.map(_.values(state.observations), renderObservation)}</div>
             </div>
             <div style={listStyle}>
-              <ConsiderationsList considerations={state.considerations} />
+              <Evidence evidence={state.evidence} />
             </div>
           </div>
         </div>

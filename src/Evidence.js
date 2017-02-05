@@ -19,18 +19,18 @@ const renderReason = (reason, index) => {
   return <div key={index}>{reason}</div>
 }
 
-const renderConsideration = (consideration) => {
+const renderEvidence = (evidence) => {
   return (
-    <div key={consideration.id}>
-      <div>{consideration.description}</div>
+    <div key={evidence.id}>
+      <div>{evidence.description}</div>
       <div>
-        {_.map(consideration.reasons, renderReason)}
+        {_.map(evidence.reasons, renderReason)}
       </div>
     </div>
   )
 }
 
-class ConsiderationsList extends Component {
+class Evidence extends Component {
   render() {
     const {
       connectDropTarget,
@@ -47,11 +47,11 @@ class ConsiderationsList extends Component {
 
     return connectDropTarget(
       <div>
-        <h2>Considerations</h2>
-        <div style={style}>{_.map(this.props.considerations, renderConsideration)}</div>
+        <h2>Evidence</h2>
+        <div style={style}>{_.map(this.props.evidence, renderEvidence)}</div>
       </div>
     )
   }
 }
 
-export default DropTarget("ObservationItem", dragTarget, getDragProps)(ConsiderationsList)
+export default DropTarget("ObservationItem", dragTarget, getDragProps)(Evidence)
