@@ -31,6 +31,11 @@ const reducer = (state, action) => {
     const reason     = action.reason
     const evidence   = state.evidence[evidenceId]
     evidence.reasons.push(reason)
+  } else if(action.type === "ChangeEvidenceDescription") {
+    const evidence = state.evidence[action.evidenceId]
+    if(evidence) {
+      evidence.description = action.description
+    }
   } else {
     console.log("Action not impelmented.", action)
   }
@@ -91,6 +96,14 @@ export const addReason = (evidenceId, reason) => {
     type: "AddReason",
     evidenceId,
     reason,
+  }
+}
+
+export const changeEvidenceDescription = (evidenceId, description) => {
+  return {
+    type: "ChangeEvidenceDescription",
+    evidenceId,
+    description,
   }
 }
 
