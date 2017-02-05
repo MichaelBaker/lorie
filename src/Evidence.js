@@ -1,57 +1,22 @@
 import React, { Component } from 'react'
 import _                    from 'underscore'
-import { DropTarget }       from 'react-dnd'
+import NewEvidence          from './NewEvidence.js'
+import EvidenceItem         from './EvidenceItem.js'
 
-const dragTarget = {
-  drop(props, monitor) {
-    console.log(monitor.getItem())
-  }
-}
-
-const getDragProps = (connect, monitor) => {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver:            monitor.isOver(),
-  }
-}
-
-const renderReason = (reason, index) => {
-  return <div key={index}>{reason}</div>
-}
-
-const renderEvidence = (evidence) => {
-  return (
-    <div key={evidence.id}>
-      <div>{evidence.description}</div>
-      <div>
-        {_.map(evidence.reasons, renderReason)}
-      </div>
-    </div>
-  )
+const renderEvidenceItem = (evidence) => {
+  return <EvidenceItem key={evidence.id} evidence={evidence} />
 }
 
 class Evidence extends Component {
   render() {
-    const {
-      connectDropTarget,
-      isOver,
-    } = this.props
-
-    const style = (() => {
-      if(isOver) {
-        return { background: 'red' }
-      } else {
-        return {}
-      }
-    })()
-
-    return connectDropTarget(
+    return (
       <div style={{ flex: "1 1" }}>
         <h2>Evidence</h2>
-        <div style={style}>{_.map(this.props.evidence, renderEvidence)}</div>
+        <NewEvidence />
+        {_.map(this.props.evidence, renderEvidenceItem)}
       </div>
     )
   }
 }
 
-export default DropTarget("ObservationItem", dragTarget, getDragProps)(Evidence)
+export default Evidence
