@@ -13,7 +13,7 @@ const dragTarget = {
   }
 }
 
-const getDragProps = (connect, monitor) => {
+const getDropProps = (connect, monitor) => {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver:            monitor.isOver(),
@@ -41,4 +41,4 @@ class NewEvidence extends Component {
   }
 }
 
-export default DropTarget("ObservationItem", dragTarget, getDragProps)(NewEvidence)
+export default DropTarget("ObservationItem", dragTarget, getDropProps)(NewEvidence)

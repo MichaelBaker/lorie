@@ -1,21 +1,14 @@
 import React, { Component } from 'react'
 import _                    from 'underscore'
 import * as Store           from './Store.js'
+import HypothesisItem       from './HypothesisItem.js'
 
 const listStyle = {
   flex: "1 1",
 }
 
-const renderHypothesis = (totalWeight, hypothesis) => {
-  const percent = parseInt((hypothesis.weight / totalWeight) * 100, 10).toString() + "%"
-  const style   = { background: "red", height: 20, width: percent }
-
-  return (
-    <div key={hypothesis.id}>
-      <div>{hypothesis.description}</div>
-      <div style={style}></div>
-    </div>
-  )
+const renderHypothesis = (store, totalWeight, hypothesis) => {
+  return <HypothesisItem key={hypothesis.id} store={store} totalWeight={totalWeight} hypothesis={hypothesis} />
 }
 
 class Hypotheses extends Component {
@@ -41,13 +34,14 @@ class Hypotheses extends Component {
   render() {
     const totalWeight      = _.reduce(this.props.hypotheses, (a, b) => a + b.weight, 0)
     const sortedHypotheses = _.sortBy(this.props.hypotheses, "weight").reverse()
+    const store            = this.props.store
 
     return (
       <div style={listStyle}>
         <h2>Hypotheses</h2>
         <input value={this.state.hypothesisText} onChange={this.changeHypothesisText.bind(this)} />
         <button onClick={this.addHypothesis.bind(this)}>+</button>
-        <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, totalWeight))}</div>
+        <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, store, totalWeight))}</div>
       </div>
     )
   }

@@ -16,7 +16,7 @@ const reducer = (state, action) => {
   } else if(action.type === "CreateHypothesis") {
     const id                  = createUUID()
     const description         = action.description
-    const hypothesis          = { id, description, weight: 1000 }
+    const hypothesis          = { id, description, evidence: [], weight: 1000 }
     state.hypotheses[id]      = hypothesis
   } else if(action.type === "CreateEvidence") {
     const id           = createUUID()
@@ -35,6 +35,11 @@ const reducer = (state, action) => {
     const evidence = state.evidence[action.evidenceId]
     if(evidence) {
       evidence.description = action.description
+    }
+  } else if(action.type === "AddHypothesisEvidence") {
+    const hypothesis = state.hypotheses[action.hypothesisId]
+    if(hypothesis) {
+      hypothesis.evidence.push(action.description)
     }
   } else {
     console.log("Action not impelmented.", action)
@@ -103,6 +108,14 @@ export const changeEvidenceDescription = (evidenceId, description) => {
   return {
     type: "ChangeEvidenceDescription",
     evidenceId,
+    description,
+  }
+}
+
+export const addHypothesisEvidence = (hypothesisId, description) => {
+  return {
+    type: "AddHypothesisEvidence",
+    hypothesisId,
     description,
   }
 }

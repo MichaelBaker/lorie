@@ -1,10 +1,16 @@
-import React, { Component } from 'react'
-import _                    from 'underscore'
-import { DropTarget }       from 'react-dnd'
-import * as Store           from './Store.js'
+import React, { Component }       from 'react'
+import _                          from 'underscore'
+import { DropTarget, DragSource } from 'react-dnd'
+import * as Store                 from './Store.js'
 
 const reasonStyle = {
   paddingLeft: "20px"
+}
+
+const dragSource = {
+  beginDrag(props) {
+    return props.evidence
+  }
 }
 
 const dragTarget = {
@@ -19,10 +25,17 @@ const dragTarget = {
   }
 }
 
-const getDragProps = (connect, monitor) => {
+const getDropProps = (connect, monitor) => {
   return {
     connectDropTarget: connect.dropTarget(),
     isOver:            monitor.isOver(),
+  }
+}
+
+const getDragProps = (connect, monitor) => {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging:        monitor.isDragging(),
   }
 }
 
@@ -96,25 +109,34 @@ class EvidenceItem extends Component {
     const {
       connectDropTarget,
       isOver,
+      connectDragSource,
+      isDragging,
     } = this.props
 
     const style = (() => {
       if(isOver) {
         return { background: 'red' }
+      } else if(isDragging) {
+        return { color: 'gray' }
       } else {
         return {}
       }
     })()
 
-    return connectDropTarget(
-      <div style={style}>
-        {this.renderDescription(evidence)}
-        <div>
-          {_.map(evidence.reasons, renderReason)}
+    return connectDragSource(
+      connectDropTarget(
+        <div style={style}>
+          {this.renderDescription(evidence)}
+          <div>
+            {_.map(evidence.reasons, renderReason)}
+          </div>
         </div>
-      </div>
+      )
     )
   }
 }
 
-export default DropTarget("ObservationItem", dragTarget, getDragProps)(EvidenceItem)
+const DroppableEvidenceItem = DropTarget("ObservationItem", dragTarget, getDropProps)(EvidenceItem)
+const DraggableEvidenceItem = DragSource("EvidenceItem", dragSource, getDragProps)(DroppableEvidenceItem)
+
+export default DraggableEvidenceItem
