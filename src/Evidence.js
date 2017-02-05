@@ -46,7 +46,7 @@ class Evidence extends Component {
     })()
 
     return connectDropTarget(
-      <div>
+      <div style={{ flex: "1 1" }}>
         <h2>Evidence</h2>
         <div style={style}>{_.map(this.props.evidence, renderEvidence)}</div>
       </div>

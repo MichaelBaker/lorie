@@ -6,18 +6,9 @@ import _                    from 'underscore'
 import { DragDropContext }  from 'react-dnd'
 import HTML5Backend         from 'react-dnd-html5-backend'
 
-const topStyle = {
-  display:       "flex",
-  flexDirection: "column",
-}
-
 const lowerStyle = {
   display:       "flex",
   flexDirection: "row",
-}
-
-const listStyle = {
-  flex: "1 1",
 }
 
 class App extends Component {
@@ -27,14 +18,10 @@ class App extends Component {
 
     return (
       <div className="App">
-        <div style={topStyle}>
-          <div style={lowerStyle}>
-            <Hypotheses   store={store} hypotheses={state.hypotheses} />
-            <Observations store={store} observations={state.observations} />
-            <div style={listStyle}>
-              <Evidence evidence={state.evidence} />
-            </div>
-          </div>
+        <div style={lowerStyle}>
+          <Hypotheses   store={store} hypotheses={state.hypotheses} />
+          <Observations store={store} observations={state.observations} />
+          <Evidence evidence={state.evidence} />
         </div>
       </div>
     );
