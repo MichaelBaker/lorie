@@ -30,5 +30,11 @@ if !clean_working_directory?
 end
 
 with_temp_branch do |branch|
+  Dir.chdir("client") do
+    run_command("npm run build")
+  end
+
+  run_command("cp -r ./client/build ./public")
+  run_command("git add . && git commit -m 'Deployment commit'")
   run_command("git push heroku #{branch}:master -f")
 end
