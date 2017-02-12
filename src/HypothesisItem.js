@@ -24,21 +24,44 @@ const getDropProps = (connect, monitor) => {
 }
 
 const renderEvidence = (evidence, index) => {
-  const style = { paddingLeft: "20px" }
-  return <div key={index} style={style}>{evidence}</div>
+  return (
+    <tr key={index}>
+      <td>{evidence.description}</td>
+      <td style={{width: "20px"}}></td>
+      <td>{evidence.db}</td>
+    </tr>
+  )
 }
 
 class HypothesisItem extends Component {
   render() {
     const {
-      totalWeight,
       hypothesis,
+      totalNegativeWeight,
+      totalPositiveWeight,
       connectDropTarget,
       isOver,
     } = this.props
 
-    const percent  = parseInt((hypothesis.weight / totalWeight) * 100, 10).toString() + "%"
-    const barStyle = { background: "red", height: 20, width: percent }
+    const totalWeight = totalNegativeWeight + totalPositiveWeight
+
+    const totalNegativePercent = parseInt((totalNegativeWeight / totalWeight) * 100, 10)
+    const totalPositivePercent = 100 - totalNegativePercent
+
+    const negativeWeight = hypothesis.weight < 0 ? Math.abs(hypothesis.weight) : 0
+    const positiveWeight = hypothesis.weight > 0 ? hypothesis.weight           : 0
+
+    const negativePercent = parseInt((negativeWeight / totalWeight) * 100, 10)
+    const positivePercent = parseInt((positiveWeight / totalWeight) * 100, 10)
+
+    const negativePadding = totalNegativePercent - negativePercent
+    const positivePadding = totalPositivePercent - positivePercent
+
+
+    const negativePaddingStyle = { display: "inline-block", background: "none",  height: 20, width: negativePadding + "%" }
+    const negativeBarStyle     = { display: "inline-block", background: "red",   height: 20, width: negativePercent + "%" }
+    const positivePaddingStyle = { display: "inline-block", background: "none",  height: 20, width: positivePadding + "%" }
+    const positiveBarStyle     = { display: "inline-block", background: "green", height: 20, width: positivePercent + "%" }
 
     const style = (() => {
       if(isOver) {
@@ -51,8 +74,15 @@ class HypothesisItem extends Component {
     return connectDropTarget(
       <div key={hypothesis.id} style={style}>
         <div>{hypothesis.description}</div>
-        <div style={barStyle}></div>
-        {_.map(hypothesis.evidence, renderEvidence)}
+        <div style={negativePaddingStyle}></div>
+        <div style={negativeBarStyle}></div>
+        <div style={positiveBarStyle}></div>
+        <div style={positivePaddingStyle}></div>
+        <table style={{ paddingLeft: "20px" }}>
+          <tbody>
+            {_.map(hypothesis.evidence, renderEvidence)}
+          </tbody>
+        </table>
       </div>
     )
   }

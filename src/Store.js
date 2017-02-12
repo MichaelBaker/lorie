@@ -1,5 +1,17 @@
 import * as Redux from 'redux'
 import createUUID from 'uuid/v4'
+import _          from 'underscore'
+
+const updateHypothesisWeights = (hypotheses) => {
+  const totalDbs = _.reduce(hypotheses, (totalDb, hypothesis) => {
+    return totalDb + _.reduce(hypothesis.evidence, (db, evidence) => db + Math.abs(evidence.db), 0)
+  }, 0)
+
+  _.each(hypotheses, (hypothesis) => {
+    const db = _.reduce(hypothesis.evidence, (db, evidence) => db + evidence.db, 0)
+    hypothesis.weight = db / totalDbs
+  })
+}
 
 const reducer = (state, action) => {
   if(action.type === "@@redux/INIT") {
@@ -13,11 +25,13 @@ const reducer = (state, action) => {
     state.observations[id]    = observation
   } else if(action.type === "AddHypothesis") {
     state.hypotheses[action.hypothesis.id] = action.hypothesis
+    updateHypothesisWeights(state.hypotheses)
   } else if(action.type === "CreateHypothesis") {
     const id                  = createUUID()
     const description         = action.description
     const hypothesis          = { id, description, evidence: [], weight: 1000 }
     state.hypotheses[id]      = hypothesis
+    updateHypothesisWeights(state.hypotheses)
   } else if(action.type === "CreateEvidence") {
     const id           = createUUID()
     const reasons      = action.reasons
@@ -39,8 +53,9 @@ const reducer = (state, action) => {
   } else if(action.type === "AddHypothesisEvidence") {
     const hypothesis = state.hypotheses[action.hypothesisId]
     if(hypothesis) {
-      hypothesis.evidence.push(action.description)
+      hypothesis.evidence.push({ description: action.description, db: 2 })
     }
+    updateHypothesisWeights(state.hypotheses)
   } else {
     console.log("Action not impelmented.", action)
   }
