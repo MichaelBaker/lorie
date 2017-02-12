@@ -51,9 +51,24 @@ const reducer = (state, action) => {
       evidence.description = action.description
     }
   } else if(action.type === "AddHypothesisEvidence") {
+    const id         = createUUID()
     const hypothesis = state.hypotheses[action.hypothesisId]
     if(hypothesis) {
-      hypothesis.evidence.push({ description: action.description, db: 2 })
+      hypothesis.evidence.push({ id: id, description: action.description, db: 2 })
+    }
+    updateHypothesisWeights(state.hypotheses)
+  } else if(action.type === "IncrementEvidenceDb") {
+    const hypothesis = state.hypotheses[action.hypothesisId]
+    if(hypothesis) {
+      const evidence = _.find(hypothesis.evidence, (e) => e.id === action.evidenceId)
+      evidence.db += 1
+    }
+    updateHypothesisWeights(state.hypotheses)
+  } else if(action.type === "DecrementEvidenceDb") {
+    const hypothesis = state.hypotheses[action.hypothesisId]
+    if(hypothesis) {
+      const evidence = _.find(hypothesis.evidence, (e) => e.id === action.evidenceId)
+      evidence.db -= 1
     }
     updateHypothesisWeights(state.hypotheses)
   } else {
@@ -132,6 +147,22 @@ export const addHypothesisEvidence = (hypothesisId, description) => {
     type: "AddHypothesisEvidence",
     hypothesisId,
     description,
+  }
+}
+
+export const incrementEvidenceDb = (hypothesisId, evidenceId, newDb) => {
+  return {
+    type: "IncrementEvidenceDb",
+    hypothesisId,
+    evidenceId,
+  }
+}
+
+export const decrementEvidenceDb = (hypothesisId, evidenceId, newDb) => {
+  return {
+    type: "DecrementEvidenceDb",
+    hypothesisId,
+    evidenceId,
   }
 }
 

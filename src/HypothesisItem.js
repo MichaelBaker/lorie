@@ -23,14 +23,22 @@ const getDropProps = (connect, monitor) => {
   }
 }
 
-const renderEvidence = (isDefaultHypothesis, evidence, index) => {
+const renderEvidence = (store, hypothesisId, isDefaultHypothesis, evidence, index) => {
+  const increment = () => {
+    store.dispatch(Store.incrementEvidenceDb(hypothesisId, evidence.id))
+  }
+
+  const decrement = () => {
+    store.dispatch(Store.decrementEvidenceDb(hypothesisId, evidence.id))
+  }
+
   return (
     <div key={index}>
       <span>{evidence.description}</span>
       <span>
-        {isDefaultHypothesis ? null : <button>-</button>}
+        {isDefaultHypothesis ? null : <button onClick={decrement}>-</button>}
         {evidence.db}
-        {isDefaultHypothesis ? null : <button>+</button>}
+        {isDefaultHypothesis ? null : <button onClick={increment}>+</button>}
       </span>
     </div>
   )
@@ -39,6 +47,7 @@ const renderEvidence = (isDefaultHypothesis, evidence, index) => {
 class HypothesisItem extends Component {
   render() {
     const {
+      store,
       hypothesis,
       totalNegativeWeight,
       totalPositiveWeight,
@@ -82,7 +91,7 @@ class HypothesisItem extends Component {
         <div style={positiveBarStyle}></div>
         <div style={positivePaddingStyle}></div>
         <div style={{ paddingLeft: "20px" }}>
-          {_.map(hypothesis.evidence, _.partial(renderEvidence, hypothesis.isDefault))}
+          {_.map(hypothesis.evidence, _.partial(renderEvidence, store, hypothesis.id, hypothesis.isDefault))}
         </div>
       </div>
     )
