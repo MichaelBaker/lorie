@@ -34,12 +34,12 @@ const renderEvidence = (store, hypothesisId, isDefaultHypothesis, evidence, inde
 
   return (
     <div key={index}>
-      <span>{evidence.description}</span>
       <span>
         {isDefaultHypothesis ? null : <button onClick={decrement}>-</button>}
         {evidence.db}
         {isDefaultHypothesis ? null : <button onClick={increment}>+</button>}
       </span>
+      <span>{evidence.description}</span>
     </div>
   )
 }
