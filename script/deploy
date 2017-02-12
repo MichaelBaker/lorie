@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+def run_command(command)
+  puts command
+  puts
+  result = `#{command}`
+  puts result
+  puts
+  result
+end
+
+def with_temp_branch(&block)
+  starting_branch  = run_command("git rev-parse --abbrev-ref HEAD")
+  temp_branch_name = "temp_deploy_branch"
+  puts `git checkout -b #{temp_branch_name}`
+  block.call(temp_branch_name)
+ensure
+  run_command("git checkout #{starting_branch}")
+  run_command("git branch -D #{temp_branch_name}")
+end
+
+def clean_working_directory?
+  run_command("git status --porcelain").length == 0
+end
+
+if !clean_working_directory?
+  puts "You have uncommited changes in your working directly."
+  puts "You can only deploy with a clean working directory."
+  exit 1
+end
+
+with_temp_branch do |branch|
+  run_command("git push heroku #{branch}:master -f")
+end
