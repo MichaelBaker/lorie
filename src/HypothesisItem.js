@@ -23,13 +23,16 @@ const getDropProps = (connect, monitor) => {
   }
 }
 
-const renderEvidence = (evidence, index) => {
+const renderEvidence = (isDefaultHypothesis, evidence, index) => {
   return (
-    <tr key={index}>
-      <td>{evidence.description}</td>
-      <td style={{width: "20px"}}></td>
-      <td>{evidence.db}</td>
-    </tr>
+    <div key={index}>
+      <span>{evidence.description}</span>
+      <span>
+        {isDefaultHypothesis ? null : <button>-</button>}
+        {evidence.db}
+        {isDefaultHypothesis ? null : <button>+</button>}
+      </span>
+    </div>
   )
 }
 
@@ -71,20 +74,24 @@ class HypothesisItem extends Component {
       }
     })()
 
-    return connectDropTarget(
+    const element = (
       <div key={hypothesis.id} style={style}>
         <div>{hypothesis.description}</div>
         <div style={negativePaddingStyle}></div>
         <div style={negativeBarStyle}></div>
         <div style={positiveBarStyle}></div>
         <div style={positivePaddingStyle}></div>
-        <table style={{ paddingLeft: "20px" }}>
-          <tbody>
-            {_.map(hypothesis.evidence, renderEvidence)}
-          </tbody>
-        </table>
+        <div style={{ paddingLeft: "20px" }}>
+          {_.map(hypothesis.evidence, _.partial(renderEvidence, hypothesis.isDefault))}
+        </div>
       </div>
     )
+
+    if(hypothesis.isDefault) {
+      return element
+    } else {
+      return connectDropTarget(element)
+    }
   }
 }
 
