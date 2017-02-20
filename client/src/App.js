@@ -18,8 +18,15 @@ class App extends Component {
     const state = this.props.state
     const store = this.props.store
 
+    const style = {
+      display:       'flex',
+      flexDirection: 'column',
+      maxWidth:      1250,
+      margin:        'auto',
+    }
+
     return (
-      <div>
+      <div style={style}>
         <Headers />
         <Explanations />
         <div style={lowerStyle}>
