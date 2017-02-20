@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Hypotheses           from './Hypotheses.js'
 import Observations         from './Observations.js'
 import Evidence             from './Evidence.js'
+import Headers              from './Headers.js'
+import Explanations         from './Explanations.js'
 import _                    from 'underscore'
 import { DragDropContext }  from 'react-dnd'
 import HTML5Backend         from 'react-dnd-html5-backend'
@@ -17,11 +19,13 @@ class App extends Component {
     const store = this.props.store
 
     return (
-      <div className="App">
+      <div>
+        <Headers />
+        <Explanations />
         <div style={lowerStyle}>
-          <Hypotheses   store={store} hypotheses={state.hypotheses} />
           <Observations store={store} observations={state.observations} />
           <Evidence     store={store} evidence={state.evidence} />
+          <Hypotheses   store={store} hypotheses={state.hypotheses} />
         </div>
       </div>
     );

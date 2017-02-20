@@ -2,10 +2,7 @@ import React, { Component } from 'react'
 import _                    from 'underscore'
 import ObservationItem      from './ObservationItem.js'
 import * as Store           from './Store.js'
-
-const listStyle = {
-  flex: "1 1",
-}
+import * as Style           from './Style.js'
 
 const renderObservation = (observation) => {
   return <ObservationItem key={observation.id} observation={observation} />
@@ -33,9 +30,12 @@ class Observations extends Component {
 
   render() {
     return (
-      <div style={listStyle}>
-        <h2>Observations</h2>
-        <input value={this.state.description} onChange={this.changeDescription.bind(this)} />
+      <div style={Style.Column}>
+        <input
+          placeholder='A new observation'
+          value={this.state.description}
+          onChange={this.changeDescription.bind(this)}
+        />
         <button onClick={this.addObservation.bind(this)}>+</button>
         <div>{_.map(_.values(this.props.observations), renderObservation)}</div>
       </div>

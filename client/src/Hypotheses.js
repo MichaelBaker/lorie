@@ -1,11 +1,8 @@
 import React, { Component } from 'react'
 import _                    from 'underscore'
-import * as Store           from './Store.js'
 import HypothesisItem       from './HypothesisItem.js'
-
-const listStyle = {
-  flex: "1 1",
-}
+import * as Store           from './Store.js'
+import * as Style           from './Style.js'
 
 const renderHypothesis = (store, negativeWeight, positiveWeight, hypothesis) => {
   return (
@@ -60,9 +57,12 @@ class Hypotheses extends Component {
     const store            = this.props.store
 
     return (
-      <div style={listStyle}>
-        <h2>Hypotheses</h2>
-        <input value={this.state.hypothesisText} onChange={this.changeHypothesisText.bind(this)} />
+      <div style={Style.Column}>
+        <input
+          placeholder='A new hypothesis'
+          value={this.state.hypothesisText}
+          onChange={this.changeHypothesisText.bind(this)}
+        />
         <button onClick={this.addHypothesis.bind(this)}>+</button>
         <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, store, negativeWeight, positiveWeight))}</div>
       </div>
