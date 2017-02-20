@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { DragSource }       from 'react-dnd'
+import * as Style           from './Style.js'
 
 const dragSource = {
   beginDrag(props) {
@@ -21,15 +22,11 @@ class ObservationItem extends Component {
       isDragging,
     } = this.props
 
-    const style = (() => {
-      if(isDragging) {
-        return { color: 'gray' }
-      } else {
-        return {}
-      }
-    })()
-
-    return connectDragSource(<div style={style}>{this.props.observation.description}</div>)
+    return connectDragSource(
+      <div style={Style.dragDropStyle(false, isDragging)}>
+        {this.props.observation.description}
+      </div>
+    )
   }
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _                    from 'underscore'
 import { DropTarget }       from 'react-dnd'
 import * as Store           from './Store.js'
+import * as Style           from './Style.js'
 
 const dragTarget = {
   drop(props, monitor) {
@@ -75,16 +76,8 @@ class HypothesisItem extends Component {
     const positivePaddingStyle = { display: "inline-block", background: "none",  height: 20, width: positivePadding + "%" }
     const positiveBarStyle     = { display: "inline-block", background: "green", height: 20, width: positivePercent + "%" }
 
-    const style = (() => {
-      if(isOver) {
-        return { background: 'blue' }
-      } else {
-        return {}
-      }
-    })()
-
     const element = (
-      <div key={hypothesis.id} style={style}>
+      <div key={hypothesis.id} style={Style.dragDropStyle(isOver, false)}>
         <div>{hypothesis.description}</div>
         <div style={negativePaddingStyle}></div>
         <div style={negativeBarStyle}></div>

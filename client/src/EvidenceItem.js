@@ -114,27 +114,9 @@ class EvidenceItem extends Component {
       isDragging,
     } = this.props
 
-    const style = (() => {
-      if(isOver) {
-        return {
-          border:      '1px solid',
-          borderColor: Style.MediumGrey,
-        }
-      } else if(isDragging) {
-        return {
-          color:  Style.LightGrey,
-          border: '1px solid transparent',
-        }
-      } else {
-        return {
-          border: '1px solid transparent',
-        }
-      }
-    })()
-
     return connectDragSource(
       connectDropTarget(
-        <div style={style}>
+        <div style={Style.dragDropStyle(isOver, isDragging)}>
           {this.renderDescription(evidence)}
           <div>
             {_.map(evidence.reasons, renderReason)}
