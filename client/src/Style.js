@@ -1,6 +1,8 @@
 export const DarkGrey   = '#343434'
 export const MediumGrey = '#999999'
 export const LightGrey  = '#aaaaaa'
+export const Red        = '#d6564d'
+export const Green      = '#80c466'
 
 export const ItemPadding = '5px'
 

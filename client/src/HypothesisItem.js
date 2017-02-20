@@ -70,11 +70,33 @@ class HypothesisItem extends Component {
     const negativePadding = totalNegativePercent - negativePercent
     const positivePadding = totalPositivePercent - positivePercent
 
+    const commonStyle = {
+      display:    "inline-block",
+      height:     20,
+      background: "none",
+    }
 
-    const negativePaddingStyle = { display: "inline-block", background: "none",  height: 20, width: negativePadding + "%" }
-    const negativeBarStyle     = { display: "inline-block", background: "red",   height: 20, width: negativePercent + "%" }
-    const positivePaddingStyle = { display: "inline-block", background: "none",  height: 20, width: positivePadding + "%" }
-    const positiveBarStyle     = { display: "inline-block", background: "green", height: 20, width: positivePercent + "%" }
+    const negativePaddingStyle = {
+      ...commonStyle,
+      width: negativePadding + "%"
+    }
+
+    const negativeBarStyle = {
+      ...commonStyle,
+      background: Style.Red,
+      width:      negativePercent + "%",
+    }
+
+    const positivePaddingStyle = {
+      ...commonStyle,
+      width: positivePadding + "%",
+    }
+
+    const positiveBarStyle = {
+      ...commonStyle,
+      background: Style.Green,
+      width:      positivePercent + "%",
+    }
 
     const element = (
       <div key={hypothesis.id} style={Style.dragDropStyle(isOver, false)}>
