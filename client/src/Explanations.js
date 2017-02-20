@@ -15,9 +15,6 @@ const Explanation = {
 
 class Explanations extends Component {
   render() {
-    const state = this.props.state
-    const store = this.props.store
-
     return (
       <div style={ExplanationsStyle}>
         <div style={Explanation}>

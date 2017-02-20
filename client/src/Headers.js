@@ -16,9 +16,6 @@ const Header = {
 
 class Headers extends Component {
   render() {
-    const state = this.props.state
-    const store = this.props.store
-
     return (
       <div style={HeadersStyle}>
         <h2 style={Header}>Observations</h2>
