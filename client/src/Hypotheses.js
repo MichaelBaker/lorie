@@ -58,12 +58,18 @@ class Hypotheses extends Component {
 
     return (
       <div style={Style.Column}>
-        <input
-          placeholder='A new hypothesis'
-          value={this.state.hypothesisText}
-          onChange={this.changeHypothesisText.bind(this)}
-        />
-        <button onClick={this.addHypothesis.bind(this)}>+</button>
+        <div style={Style.InputSection}>
+          <input
+            style={Style.InputText}
+            placeholder='A new hypothesis'
+            value={this.state.hypothesisText}
+            onChange={this.changeHypothesisText.bind(this)}
+          />
+          <button
+            style={Style.InputButton}
+            onClick={this.addHypothesis.bind(this)}
+          >+</button>
+        </div>
         <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, store, negativeWeight, positiveWeight))}</div>
       </div>
     )

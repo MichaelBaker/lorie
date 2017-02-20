@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import _                    from 'underscore'
 import { DropTarget }       from 'react-dnd'
 import * as Store           from './Store.js'
+import * as Style           from './Style.js'
 
 const dragTarget = {
   drop(props, monitor) {
@@ -27,16 +28,27 @@ class NewEvidence extends Component {
       isOver,
     } = this.props
 
-    const style = (() => {
+    const hoverStyle = (() => {
       if(isOver) {
-        return { background: 'red' }
+        return {
+          borderBottom: '1px solid',
+          borderColor:  Style.MediumGrey,
+        }
       } else {
         return {}
       }
     })()
 
+    const style = {
+      borderBottom: 'none',
+      ...hoverStyle,
+    }
+
     return connectDropTarget(
-      <div style={style}>+ New Evidence</div>
+      <div style={Style.InputSection}>
+        <div style={{...Style.InputText, ...style,}}>New Evidence</div>
+        <button style={Style.InputButton}>+</button>
+      </div>
     )
   }
 }

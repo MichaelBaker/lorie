@@ -31,12 +31,18 @@ class Observations extends Component {
   render() {
     return (
       <div style={Style.Column}>
-        <input
-          placeholder='A new observation'
-          value={this.state.description}
-          onChange={this.changeDescription.bind(this)}
-        />
-        <button onClick={this.addObservation.bind(this)}>+</button>
+        <div style={Style.InputSection}>
+          <input
+            style={Style.InputText}
+            placeholder='A new observation'
+            value={this.state.description}
+            onChange={this.changeDescription.bind(this)}
+          />
+          <button
+            style={Style.InputButton}
+            onClick={this.addObservation.bind(this)}
+          >+</button>
+        </div>
         <div>{_.map(_.values(this.props.observations), renderObservation)}</div>
       </div>
     )

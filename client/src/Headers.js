@@ -8,7 +8,7 @@ const HeadersStyle = {
 }
 
 const Header = {
-  color:      Style.DarkGrey0,
+  color:      Style.DarkGrey,
   fontFamily: 'sans-serif',
   paddingTop: '20px',
   ...Style.Column,

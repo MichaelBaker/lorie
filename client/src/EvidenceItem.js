@@ -2,6 +2,7 @@ import React, { Component }       from 'react'
 import _                          from 'underscore'
 import { DropTarget, DragSource } from 'react-dnd'
 import * as Store                 from './Store.js'
+import * as Style                 from './Style.js'
 
 const reasonStyle = {
   paddingLeft: "20px"
@@ -115,11 +116,19 @@ class EvidenceItem extends Component {
 
     const style = (() => {
       if(isOver) {
-        return { background: 'red' }
+        return {
+          border:      '1px solid',
+          borderColor: Style.MediumGrey,
+        }
       } else if(isDragging) {
-        return { color: 'gray' }
+        return {
+          color:  Style.LightGrey,
+          border: '1px solid transparent',
+        }
       } else {
-        return {}
+        return {
+          border: '1px solid transparent',
+        }
       }
     })()
 
