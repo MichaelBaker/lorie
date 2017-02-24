@@ -29,7 +29,8 @@ class Observations extends Component {
     this.setState({ description: event.target.value })
   }
 
-  addObservation() {
+  addObservation(event) {
+    event.preventDefault()
     const description = this.state.description
     const store       = this.props.store
     this.setState({ description: "" })
@@ -39,7 +40,7 @@ class Observations extends Component {
   render() {
     return (
       <div style={Style.Column}>
-        <div style={Style.InputSection}>
+        <form style={Style.InputSection} onSubmit={this.addObservation.bind(this)}>
           <input
             style={Style.InputText}
             placeholder='A new observation'
@@ -47,10 +48,10 @@ class Observations extends Component {
             onChange={this.changeDescription.bind(this)}
           />
           <button
+            type="submit"
             style={Style.InputButton}
-            onClick={this.addObservation.bind(this)}
           >+</button>
-        </div>
+        </form>
         {renderObservations(_.values(this.props.observations))}
       </div>
     )

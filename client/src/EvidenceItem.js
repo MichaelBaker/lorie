@@ -74,7 +74,8 @@ class EvidenceItem extends Component {
     this.setState({ mode: this.displayMode() })
   }
 
-  setNewDescription() {
+  setNewDescription(event) {
+    event.preventDefault()
     const evidenceId  = this.props.evidence.id
     const description = this.state.mode.newDescription
     this.props.store.dispatch(Store.changeEvidenceDescription(evidenceId, description))
@@ -86,20 +87,20 @@ class EvidenceItem extends Component {
 
     if(mode.type === "editing") {
       return (
-        <div>
-          <input value={mode.newDescription} onChange={this.updateDescription.bind(this)} />
-          <button onClick={this.cancelEditing.bind(this)}>-</button>
-          <button onClick={this.setNewDescription.bind(this)}>+</button>
-        </div>
+        <form onSubmit={this.setNewDescription.bind(this)}>
+          <input autoFocus value={mode.newDescription} onChange={this.updateDescription.bind(this)} />
+          <button style={Style.InputButton} type="submit">✓</button>
+          <button style={Style.InputButton} onClick={this.cancelEditing.bind(this)}> ⃠</button>
+        </form>
       )
     } else if(mode.type === "display") {
-      return <div>{evidence.description} <span onClick={this.startEditing.bind(this)}>+</span></div>
+      return <form>{evidence.description} <span onClick={this.startEditing.bind(this)}>+</span></form>
     } else {
       return (
-        <div>
+        <form>
           {evidence.description} <span onClick={this.startEditing.bind(this)}>+</span>
           <div>{"Unknown mode: " + mode.type}</div>
-        </div>
+        </form>
       )
     }
   }

@@ -29,7 +29,8 @@ class Hypotheses extends Component {
     this.setState({ hypothesisText: event.target.value })
   }
 
-  addHypothesis() {
+  addHypothesis(event) {
+    event.preventDefault()
     const description = this.state.hypothesisText
     const store       = this.props.store
     this.setState({ hypothesisText: "" })
@@ -58,7 +59,7 @@ class Hypotheses extends Component {
 
     return (
       <div style={Style.Column}>
-        <div style={Style.InputSection}>
+        <form style={Style.InputSection} onSubmit={this.addHypothesis.bind(this)}>
           <input
             style={Style.InputText}
             placeholder='A new hypothesis'
@@ -66,10 +67,10 @@ class Hypotheses extends Component {
             onChange={this.changeHypothesisText.bind(this)}
           />
           <button
+            type="submit"
             style={Style.InputButton}
-            onClick={this.addHypothesis.bind(this)}
           >+</button>
-        </div>
+        </form>
         <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, store, negativeWeight, positiveWeight))}</div>
       </div>
     )
