@@ -8,6 +8,14 @@ const renderObservation = (observation) => {
   return <ObservationItem key={observation.id} observation={observation} />
 }
 
+const renderObservations = (observations) => {
+  if(observations.length === 0) {
+    return <div style={{ color: Style.MediumGrey}}>No Observations</div>
+  } else {
+    return _.map(observations, renderObservation)
+  }
+}
+
 class Observations extends Component {
   constructor(props) {
     super(props)
@@ -43,7 +51,7 @@ class Observations extends Component {
             onClick={this.addObservation.bind(this)}
           >+</button>
         </div>
-        <div>{_.map(_.values(this.props.observations), renderObservation)}</div>
+        {renderObservations(_.values(this.props.observations))}
       </div>
     )
   }
