@@ -75,6 +75,7 @@ const reducer = (state, action) => {
     console.log("Action not impelmented.", action)
   }
 
+  window.localStorage.setItem("state", JSON.stringify(state))
   return state
 }
 
@@ -167,5 +168,12 @@ export const decrementEvidenceDb = (hypothesisId, evidenceId, newDb) => {
 }
 
 export const createStore = () => {
-  return Redux.createStore(reducer, initialState)
+  const savedState = window.localStorage.getItem("state")
+
+  if(savedState) {
+    return Redux.createStore(reducer, JSON.parse(savedState))
+  } else {
+    window.localStorage.setItem("state", JSON.stringify(initialState))
+    return Redux.createStore(reducer, initialState)
+  }
 }
