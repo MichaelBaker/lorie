@@ -79,6 +79,14 @@ const reducer = (state, action) => {
     updateHypothesisWeights(state.hypotheses)
   } else if(action.type === "ClearState") {
     state = initialState
+    state.hypotheses[""] = {
+      id: "",
+      description: "An alternative you haven't considered yet",
+      evidence: [{ id: "", description: "Your unstated assumptions", db: 20 }],
+      weight: 0,
+      isDefault: true
+    }
+    updateHypothesisWeights(state.hypotheses)
   } else {
     console.log("Action not impelmented.", action)
   }
@@ -182,6 +190,8 @@ export const createStore = () => {
     return Redux.createStore(reducer, JSON.parse(savedState))
   } else {
     window.localStorage.setItem("state", JSON.stringify(initialState))
-    return Redux.createStore(reducer, initialState)
+    const store = Redux.createStore(reducer, {})
+    store.dispatch(clearState())
+    return store
   }
 }
