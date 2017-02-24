@@ -13,6 +13,12 @@ const updateHypothesisWeights = (hypotheses) => {
   })
 }
 
+const initialState = {
+  observations:   {},
+  evidence:       {},
+  hypotheses:     {},
+}
+
 const reducer = (state, action) => {
   if(action.type === "@@redux/INIT") {
     // Ignore
@@ -71,6 +77,8 @@ const reducer = (state, action) => {
       evidence.db -= 1
     }
     updateHypothesisWeights(state.hypotheses)
+  } else if(action.type === "ClearState") {
+    state = initialState
   } else {
     console.log("Action not impelmented.", action)
   }
@@ -79,10 +87,10 @@ const reducer = (state, action) => {
   return state
 }
 
-const initialState = {
-  observations:   {},
-  evidence:       {},
-  hypotheses:     {},
+export const clearState = () => {
+  return {
+    type: "ClearState",
+  }
 }
 
 export const createObservation = (description) => {

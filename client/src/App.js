@@ -7,6 +7,8 @@ import Explanations         from './Explanations.js'
 import _                    from 'underscore'
 import { DragDropContext }  from 'react-dnd'
 import HTML5Backend         from 'react-dnd-html5-backend'
+import * as Store           from './Store.js'
+import * as Style           from './Style.js'
 
 const lowerStyle = {
   display:       "flex",
@@ -14,6 +16,10 @@ const lowerStyle = {
 }
 
 class App extends Component {
+  clearState() {
+    this.props.store.dispatch(Store.clearState())
+  }
+
   render() {
     const state = this.props.state
     const store = this.props.store
@@ -23,12 +29,20 @@ class App extends Component {
       flexDirection: 'column',
       maxWidth:      1250,
       margin:        'auto',
+      marginBottom:  50,
+    }
+
+    const clearStyle = {
+      textAlign: "center",
+      color:     Style.Red,
+      margin:    10,
     }
 
     return (
       <div style={style}>
         <Headers />
         <Explanations />
+        <div style={clearStyle} onClick={this.clearState.bind(this)}>Clear State</div>
         <div style={lowerStyle}>
           <Observations store={store} observations={state.observations} />
           <Evidence     store={store} evidence={state.evidence} />
