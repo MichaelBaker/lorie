@@ -13,6 +13,7 @@ const dragTarget = {
 
     if(hypothesisId && evidence && evidence.description) {
       store.dispatch(Store.addHypothesisEvidence(hypothesisId, evidence.description))
+      store.dispatch(Store.sortHypotheses())
     }
   }
 }
