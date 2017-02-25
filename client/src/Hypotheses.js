@@ -25,6 +25,10 @@ class Hypotheses extends Component {
     }
   }
 
+  triggerSort() {
+    this.props.store.dispatch(Store.sortHypotheses())
+  }
+
   changeHypothesisText(event) {
     this.setState({ hypothesisText: event.target.value })
   }
@@ -72,7 +76,9 @@ class Hypotheses extends Component {
             style={Style.InputButton}
           >+</button>
         </form>
-        <div>{_.map(sortedHypotheses, _.partial(renderHypothesis, store, negativeWeight, positiveWeight))}</div>
+        <div onMouseLeave={this.triggerSort.bind(this)}>
+          {_.map(sortedHypotheses, _.partial(renderHypothesis, store, negativeWeight, positiveWeight))}
+        </div>
       </div>
     )
   }
