@@ -35,6 +35,7 @@ class Hypotheses extends Component {
     const store       = this.props.store
     this.setState({ hypothesisText: "" })
     store.dispatch(Store.createHypothesis(description))
+    store.dispatch(Store.sortHypotheses())
   }
 
   render() {
@@ -54,7 +55,7 @@ class Hypotheses extends Component {
       }
     }, 0)
 
-    const sortedHypotheses = _.sortBy(this.props.hypotheses, "weight").reverse()
+    const sortedHypotheses = _.sortBy(this.props.hypotheses, "order")
     const store            = this.props.store
 
     return (

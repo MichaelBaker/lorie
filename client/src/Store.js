@@ -13,6 +13,13 @@ const updateHypothesisWeights = (hypotheses) => {
   })
 }
 
+const updateHypothesisOrders = (hypotheses) => {
+  const sortedHypotheses = _.sortBy(hypotheses, "weight").reverse()
+  _.each(sortedHypotheses, (hypothesis, index) => {
+    hypothesis.order = index
+  })
+}
+
 const initialState = {
   observations:   {},
   evidence:       {},
@@ -87,6 +94,8 @@ const reducer = (state, action) => {
       isDefault: true
     }
     updateHypothesisWeights(state.hypotheses)
+  } else if(action.type === "SortHypotheses") {
+    updateHypothesisOrders(state.hypotheses)
   } else {
     console.log("Action not impelmented.", action)
   }
@@ -98,6 +107,12 @@ const reducer = (state, action) => {
 export const clearState = () => {
   return {
     type: "ClearState",
+  }
+}
+
+export const sortHypotheses = () => {
+  return {
+    type: "SortHypotheses",
   }
 }
 
