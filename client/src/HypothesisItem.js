@@ -34,14 +34,34 @@ const renderEvidence = (store, hypothesisId, isDefaultHypothesis, evidence, inde
     store.dispatch(Store.decrementEvidenceDb(hypothesisId, evidence.id))
   }
 
+  const divStyle = {
+    display: 'flex',
+  }
+
+  const itemStyle = {
+    flex: '1 1',
+  }
+
+  const buttonStyle = {
+    flex: '1 0',
+  }
+
   return (
-    <div key={index}>
-      <span>
-        {isDefaultHypothesis ? null : <button onClick={decrement}>-</button>}
-        {evidence.db}
-        {isDefaultHypothesis ? null : <button onClick={increment}>+</button>}
+    <div key={index} style={divStyle}>
+      <span style={{...itemStyle, display: 'flex', marginRight: 10, flexGrow: 1}}>
+        {isDefaultHypothesis
+          ? <span style={buttonStyle}/>
+          : <button style={buttonStyle} onClick={decrement}>-</button>}
+        <span style={{flex: '2 1', textAlign: 'center'}}>
+          {evidence.db}
+        </span>
+        {isDefaultHypothesis
+          ? <span style={buttonStyle}/>
+          : <button style={buttonStyle} onClick={increment}>+</button>}
       </span>
-      <span>{evidence.description}</span>
+      <span style={{...itemStyle, flexGrow: 3}}>
+        {evidence.description}
+      </span>
     </div>
   )
 }
